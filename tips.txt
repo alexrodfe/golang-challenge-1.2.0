@@ -1,0 +1,41 @@
+ Architecture & Design
+
+    Mantén una estructura clara y fácil de entender.
+    Prioriza una solución simple y adecuada al problema.
+    Evita complejidad innecesaria.
+
+Code Organization
+
+    Separa las responsabilidades de forma razonable.
+    Mantén la lógica de negocio desacoplada de los detalles técnicos siempre que sea posible.
+    Piensa en la mantenibilidad del código.
+
+Filtering & Querying
+
+    Implementa el filtrado de forma eficiente.
+    Ten en cuenta aspectos como ordenación o paginación cuando aporten valor.
+    Evita soluciones excesivamente complejas.
+
+Testing
+
+    Incluye pruebas que validen los principales comportamientos de la aplicación.
+    Considera tanto casos habituales como casos límite.
+    Valora la fiabilidad de la solución por encima de la cantidad de tests.
+
+Code Quality
+
+    Mantén el código limpio y consistente.
+    Sigue las buenas prácticas y convenciones habituales del lenguaje.
+    Documenta brevemente las decisiones relevantes en el README.
+
+Aspectos especialmente valorados
+
+    Solución funcional.
+    Simplicidad y pragmatismo.
+    Calidad del código.
+    Testing.
+    Buenas prácticas.
+    Mantenibilidad.
+
+Importante
+La prioridad principal es que la solución funcione correctamente. Valoramos más una solución clara, sencilla y bien ejecutada que una arquitectura compleja para resolver un problema simple.
