@@ -8,6 +8,7 @@ import (
 	"strconv"
 
 	"github.com/mytheresa/go-hiring-challenge/models"
+	"github.com/shopspring/decimal"
 )
 
 type Response struct {
@@ -22,7 +23,7 @@ type Product struct {
 }
 
 type ProductsRepository interface {
-	GetAllProducts(offset, limit int) ([]models.Product, int64, error)
+	GetAllProducts(offset, limit int, filters models.ProductFilters) ([]models.Product, int64, error)
 }
 
 type CatalogHandler struct {
@@ -42,7 +43,13 @@ func (h *CatalogHandler) HandleGet(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	res, total, err := h.repo.GetAllProducts(offset, limit)
+	filters, err := parseFiltering(r.URL.Query())
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	res, total, err := h.repo.GetAllProducts(offset, limit, filters)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -91,4 +98,22 @@ func parsePagination(q url.Values) (offset, limit int, err error) {
 	limit = max(1, min(limit, 100))
 
 	return offset, limit, nil
+}
+
+func parseFiltering(q url.Values) (models.ProductFilters, error) {
+	var filters models.ProductFilters
+
+	if v := q.Get("category"); v != "" {
+		filters.CategoryCode = v
+	}
+
+	if v := q.Get("price_max"); v != "" {
+		price, err := decimal.NewFromString(v)
+		if err != nil {
+			return models.ProductFilters{}, fmt.Errorf("invalid price_max")
+		}
+		filters.PriceLessThan = &price
+	}
+
+	return filters, nil
 }
