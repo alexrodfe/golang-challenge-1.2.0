@@ -16,8 +16,12 @@ type Product struct {
 	Price float64 `json:"price"`
 }
 
+type ProductsRepository interface {
+	GetAllProducts() ([]models.Product, error)
+}
+
 type CatalogHandler struct {
-	repo *models.ProductsRepository
+	repo ProductsRepository
 }
 
 func NewCatalogHandler(r *models.ProductsRepository) *CatalogHandler {
