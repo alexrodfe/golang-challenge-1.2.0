@@ -1,9 +1,14 @@
 package models
 
 import (
+	"errors"
+
 	"github.com/shopspring/decimal"
 	"gorm.io/gorm"
 )
+
+// ErrProductNotFound is returned when no product matches the given lookup.
+var ErrProductNotFound = errors.New("product not found")
 
 type ProductsRepository struct {
 	db *gorm.DB
@@ -49,4 +54,15 @@ func filteredProductsQuery(db *gorm.DB, filters ProductFilters) *gorm.DB {
 	}
 
 	return query
+}
+
+func (r *ProductsRepository) GetProductByCode(code string) (*Product, error) {
+	var product Product
+	if err := r.db.Preload("Variants").Preload("Category").Where("code = ?", code).First(&product).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil, ErrProductNotFound
+		}
+		return nil, err
+	}
+	return &product, nil
 }

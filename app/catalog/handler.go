@@ -2,6 +2,7 @@ package catalog
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -22,8 +23,22 @@ type Product struct {
 	Price    float64 `json:"price"`
 }
 
+type ProductDetails struct {
+	Code     string    `json:"code"`
+	Category string    `json:"category"`
+	Price    float64   `json:"price"`
+	Variants []Variant `json:"variants"`
+}
+
+type Variant struct {
+	SKU   string  `json:"sku"`
+	Name  string  `json:"name"`
+	Price float64 `json:"price"`
+}
+
 type ProductsRepository interface {
 	GetAllProducts(offset, limit int, filters models.ProductFilters) ([]models.Product, int64, error)
+	GetProductByCode(code string) (*models.Product, error)
 }
 
 type CatalogHandler struct {
@@ -116,4 +131,44 @@ func parseFiltering(q url.Values) (models.ProductFilters, error) {
 	}
 
 	return filters, nil
+}
+
+func (h *CatalogHandler) HandleGetByCode(w http.ResponseWriter, r *http.Request) {
+	code := r.PathValue("code")
+	if code == "" {
+		http.Error(w, "missing product code", http.StatusBadRequest)
+		return
+	}
+
+	product, err := h.repo.GetProductByCode(code)
+	if err != nil {
+		if errors.Is(err, models.ErrProductNotFound) {
+			http.Error(w, "product not found", http.StatusNotFound)
+			return
+		}
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	variants := make([]Variant, len(product.Variants))
+	for i, v := range product.Variants {
+		variants[i] = Variant{
+			SKU:   v.SKU,
+			Name:  v.Name,
+			Price: v.EffectivePrice(*product).InexactFloat64(),
+		}
+	}
+
+	response := ProductDetails{
+		Code:     product.Code,
+		Category: string(product.Category.Code),
+		Price:    product.Price.InexactFloat64(),
+		Variants: variants,
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	if err := json.NewEncoder(w).Encode(response); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 }
