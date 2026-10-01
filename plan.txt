@@ -3,20 +3,20 @@ Plan de implementacion - golang-challenge-1.2.0
 
 Estado: EN PROGRESO
 
-[ ] 1. Refactor de ProductsRepository (Catalog endpoint, tarea 1)
+[x] 1. Refactor de ProductsRepository (Catalog endpoint, tarea 1)
     - Desacoplar CatalogHandler de la struct concreta models.ProductsRepository.
     - Definir la interfaz que necesita el handler en el propio paquete consumidor (app/catalog).
 
-[ ] 2. Modelo de Categorias (Catalog endpoint, tarea 2)
+[x] 2. Modelo de Categorias (Catalog endpoint, tarea 2)
     - Category{ID, Code, Name}. Migracion SQL siguiendo el patron de sql/001-products.sql y sql/002-variants.sql.
     - Relacionar products <-> categories (Clothing: PROD001/004/007, Shoes: PROD002/006, Accessories: PROD003/005/008).
 
-[ ] 3. Incluir categoria en la respuesta de /catalog (Catalog endpoint, tarea 3)
+[x] 3. Incluir categoria en la respuesta de /catalog (Catalog endpoint, tarea 3)
 
-[ ] 4. Paginacion offset/limit en /catalog (Catalog endpoint, tarea 4)
+[x] 4. Paginacion offset/limit en /catalog (Catalog endpoint, tarea 4)
     - offset default 0, limit default 10 (min 1, max 100), incluir total de productos.
 
-[ ] 5. Filtros en /catalog por categoria y por precio menor que (Catalog endpoint, tarea 5)
+[x] 5. Filtros en /catalog por categoria y por precio menor que (Catalog endpoint, tarea 5)
 
 [ ] 6. Endpoint de detalle GET /catalog/{code} (Product details endpoint)
     - Incluir variantes (heredan el precio del producto si el suyo es null) y categoria.

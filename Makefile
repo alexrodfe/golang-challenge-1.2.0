@@ -1,6 +1,9 @@
 tidy ::
 	@go mod tidy && go mod vendor
 
+mocks ::
+	@go run github.com/vektra/mockery/v3@v3.8.0
+
 seed ::
 	@go run cmd/seed/main.go
 
