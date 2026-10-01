@@ -18,11 +18,11 @@ Estado: EN PROGRESO
 
 [x] 5. Filtros en /catalog por categoria y por precio menor que (Catalog endpoint, tarea 5)
 
-[ ] 6. Endpoint de detalle GET /catalog/{code} (Product details endpoint)
+[x] 6. Endpoint de detalle GET /catalog/{code} (Product details endpoint)
     - Incluir variantes (heredan el precio del producto si el suyo es null) y categoria.
     - Tests unitarios.
 
-[ ] 7. Endpoints de categorias (Categories endpoint)
+[x] 7. Endpoints de categorias (Categories endpoint)
     - GET /categories (listado) + tests.
     - POST /categories (crear) + tests.
 

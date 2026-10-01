@@ -27,3 +27,8 @@ packages:
       all: false
     interfaces:
       ProductsRepository:
+  github.com/mytheresa/go-hiring-challenge/app/categories:
+    config:
+      all: false
+    interfaces:
+      CategoriesRepository:
