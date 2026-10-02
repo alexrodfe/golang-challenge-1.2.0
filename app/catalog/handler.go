@@ -1,13 +1,13 @@
 package catalog
 
 import (
-	"encoding/json"
 	"errors"
 	"fmt"
 	"net/http"
 	"net/url"
 	"strconv"
 
+	"github.com/mytheresa/go-hiring-challenge/app/api"
 	"github.com/mytheresa/go-hiring-challenge/models"
 	"github.com/shopspring/decimal"
 )
@@ -54,19 +54,19 @@ func NewCatalogHandler(r ProductsRepository) *CatalogHandler {
 func (h *CatalogHandler) HandleGet(w http.ResponseWriter, r *http.Request) {
 	offset, limit, err := parsePagination(r.URL.Query())
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
+		api.ErrorResponse(w, http.StatusBadRequest, err.Error())
 		return
 	}
 
 	filters, err := parseFiltering(r.URL.Query())
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
+		api.ErrorResponse(w, http.StatusBadRequest, err.Error())
 		return
 	}
 
 	res, total, err := h.repo.GetAllProducts(offset, limit, filters)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		api.ErrorResponse(w, http.StatusInternalServerError, err.Error())
 		return
 	}
 
@@ -80,18 +80,10 @@ func (h *CatalogHandler) HandleGet(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	// Return the products as a JSON response
-	w.Header().Set("Content-Type", "application/json")
-
-	response := Response{
+	api.OKResponse(w, Response{
 		Products:    products,
 		TotalNumber: total,
-	}
-
-	if err := json.NewEncoder(w).Encode(response); err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
+	})
 }
 
 func parsePagination(q url.Values) (offset, limit int, err error) {
@@ -136,17 +128,17 @@ func parseFiltering(q url.Values) (models.ProductFilters, error) {
 func (h *CatalogHandler) HandleGetByCode(w http.ResponseWriter, r *http.Request) {
 	code := r.PathValue("code")
 	if code == "" {
-		http.Error(w, "missing product code", http.StatusBadRequest)
+		api.ErrorResponse(w, http.StatusBadRequest, "missing product code")
 		return
 	}
 
 	product, err := h.repo.GetProductByCode(code)
 	if err != nil {
 		if errors.Is(err, models.ErrProductNotFound) {
-			http.Error(w, "product not found", http.StatusNotFound)
+			api.ErrorResponse(w, http.StatusNotFound, "product not found")
 			return
 		}
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		api.ErrorResponse(w, http.StatusInternalServerError, err.Error())
 		return
 	}
 
@@ -159,16 +151,10 @@ func (h *CatalogHandler) HandleGetByCode(w http.ResponseWriter, r *http.Request)
 		}
 	}
 
-	response := ProductDetails{
+	api.OKResponse(w, ProductDetails{
 		Code:     product.Code,
 		Category: string(product.Category.Code),
 		Price:    product.Price.InexactFloat64(),
 		Variants: variants,
-	}
-
-	w.Header().Set("Content-Type", "application/json")
-	if err := json.NewEncoder(w).Encode(response); err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
+	})
 }

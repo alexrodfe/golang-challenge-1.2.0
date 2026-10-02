@@ -173,3 +173,14 @@ func (s *CatalogHandlerSuite) TestHandleGetByCode_RepositoryError() {
 	s.Equal(http.StatusInternalServerError, rec.Code)
 	s.repo.AssertExpectations(s.T())
 }
+
+func (s *CatalogHandlerSuite) TestHandleGetByCode_MissingCode() {
+	// Calling the handler directly (bypassing the mux) since the registered
+	// pattern "/catalog/{code}" never dispatches here with an empty code.
+	req := httptest.NewRequest(http.MethodGet, "/catalog/", nil)
+	rec := httptest.NewRecorder()
+	s.handler.HandleGetByCode(rec, req)
+
+	s.Equal(http.StatusBadRequest, rec.Code)
+	s.repo.AssertNotCalled(s.T(), "GetProductByCode", mock.Anything)
+}
