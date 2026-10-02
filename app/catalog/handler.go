@@ -7,8 +7,8 @@ import (
 	"net/url"
 	"strconv"
 
-	"github.com/mytheresa/go-hiring-challenge/app/api"
-	"github.com/mytheresa/go-hiring-challenge/models"
+	"github.com/alexrodfe/golang-challenge-1.2.0/app/api"
+	"github.com/alexrodfe/golang-challenge-1.2.0/models"
 	"github.com/shopspring/decimal"
 )
 

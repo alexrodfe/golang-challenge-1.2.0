@@ -26,9 +26,9 @@ Estado: EN PROGRESO
     - GET /categories (listado) + tests.
     - POST /categories (crear) + tests.
 
-[ ] 8. Tests unitarios completos de app/catalog/handler.go cubriendo todo lo anterior.
+[x] 8. Tests unitarios completos de app/catalog/handler.go cubriendo todo lo anterior.
 
-[ ] 9. Implementar app/api/response.go (OKResponse/ErrorResponse) para pasar response_test.go
+[x] 9. Implementar app/api/response.go (OKResponse/ErrorResponse) para pasar response_test.go
     y refactorizar todos los handlers para usar estas funciones.
 
 Notas de arquitectura acordadas:

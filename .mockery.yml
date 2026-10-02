@@ -22,12 +22,12 @@ require-template-schema-exists: true
 template: testify
 template-schema: '{{.Template}}.schema.json'
 packages:
-  github.com/mytheresa/go-hiring-challenge/app/catalog:
+  github.com/alexrodfe/golang-challenge-1.2.0/app/catalog:
     config:
       all: false
     interfaces:
       ProductsRepository:
-  github.com/mytheresa/go-hiring-challenge/app/categories:
+  github.com/alexrodfe/golang-challenge-1.2.0/app/categories:
     config:
       all: false
     interfaces:

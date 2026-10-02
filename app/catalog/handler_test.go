@@ -7,9 +7,9 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/mytheresa/go-hiring-challenge/app/catalog"
-	"github.com/mytheresa/go-hiring-challenge/mocks"
-	"github.com/mytheresa/go-hiring-challenge/models"
+	"github.com/alexrodfe/golang-challenge-1.2.0/app/catalog"
+	"github.com/alexrodfe/golang-challenge-1.2.0/mocks"
+	"github.com/alexrodfe/golang-challenge-1.2.0/models"
 	"github.com/shopspring/decimal"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/suite"

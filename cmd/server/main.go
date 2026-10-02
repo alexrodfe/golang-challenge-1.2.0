@@ -9,11 +9,11 @@ import (
 	"os/signal"
 	"syscall"
 
+	"github.com/alexrodfe/golang-challenge-1.2.0/app/catalog"
+	"github.com/alexrodfe/golang-challenge-1.2.0/app/categories"
+	"github.com/alexrodfe/golang-challenge-1.2.0/app/database"
+	"github.com/alexrodfe/golang-challenge-1.2.0/models"
 	"github.com/joho/godotenv"
-	"github.com/mytheresa/go-hiring-challenge/app/catalog"
-	"github.com/mytheresa/go-hiring-challenge/app/categories"
-	"github.com/mytheresa/go-hiring-challenge/app/database"
-	"github.com/mytheresa/go-hiring-challenge/models"
 )
 
 func main() {

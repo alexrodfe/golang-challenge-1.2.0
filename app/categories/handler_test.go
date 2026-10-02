@@ -8,9 +8,9 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/mytheresa/go-hiring-challenge/app/categories"
-	"github.com/mytheresa/go-hiring-challenge/mocks"
-	"github.com/mytheresa/go-hiring-challenge/models"
+	"github.com/alexrodfe/golang-challenge-1.2.0/app/categories"
+	"github.com/alexrodfe/golang-challenge-1.2.0/mocks"
+	"github.com/alexrodfe/golang-challenge-1.2.0/models"
 	"github.com/stretchr/testify/suite"
 )
 

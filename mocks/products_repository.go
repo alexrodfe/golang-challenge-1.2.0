@@ -5,7 +5,7 @@
 package mocks
 
 import (
-	"github.com/mytheresa/go-hiring-challenge/models"
+	"github.com/alexrodfe/golang-challenge-1.2.0/models"
 	mock "github.com/stretchr/testify/mock"
 )
 
