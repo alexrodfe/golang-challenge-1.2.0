@@ -13,3 +13,5 @@ WHERE code IN ('PROD002', 'PROD006');
 
 UPDATE products SET category_id = (SELECT id FROM product_categories WHERE code = 'ACCESSORIES')
 WHERE code IN ('PROD003', 'PROD005', 'PROD008');
+
+ALTER TABLE products ALTER COLUMN category_id SET NOT NULL;
