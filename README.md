@@ -33,6 +33,13 @@ This repository contains a Go application for managing products and their prices
 
 Follow up for the assignemnt here: [ASSIGNMENT.md](ASSIGNMENT.md)
 
+## API
+
+- `GET /catalog?offset=0&limit=10&category=SHOES&price_max=20` - paginated product list (`products`, `total_number`). `limit` is clamped to [1, 100]; products are ordered by id.
+- `GET /catalog/{code}` - product details with category and variants (a variant without its own price inherits the product's). `404` if not found.
+- `GET /categories` - list all categories.
+- `POST /categories` with `{"code": "HATS", "name": "Hats"}` - creates a category (`201`; `400` on invalid body; `409` if the code already exists).
+
 ## Design Decisions
 
 - **Consumer-defined interfaces**: each handler package (`app/catalog`, `app/categories`) declares the repository interface it needs, instead of depending on the concrete `models.*Repository` structs. Repositories stay decoupled from the HTTP layer.
