@@ -3,15 +3,11 @@ package models
 import (
 	"errors"
 
-	"github.com/lib/pq"
 	"gorm.io/gorm"
 )
 
 // ErrCategoryAlreadyExists is returned when a category with the same code already exists.
 var ErrCategoryAlreadyExists = errors.New("category already exists")
-
-// uniqueViolationCode is the Postgres error code for a unique constraint violation.
-const uniqueViolationCode = "23505"
 
 type CategoriesRepository struct {
 	db *gorm.DB
@@ -33,8 +29,7 @@ func (r *CategoriesRepository) GetAllCategories() ([]ProductCategory, error) {
 
 func (r *CategoriesRepository) CreateCategory(category ProductCategory) (*ProductCategory, error) {
 	if err := r.db.Create(&category).Error; err != nil {
-		var pqErr *pq.Error
-		if errors.As(err, &pqErr) && pqErr.Code == uniqueViolationCode {
+		if errors.Is(err, gorm.ErrDuplicatedKey) {
 			return nil, ErrCategoryAlreadyExists
 		}
 		return nil, err
