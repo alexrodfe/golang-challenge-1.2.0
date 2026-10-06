@@ -34,7 +34,7 @@ func (r *ProductsRepository) GetAllProducts(offset, limit int, filters ProductFi
 
 	var products []Product
 	query := filteredProductsQuery(r.db, filters).Preload("Variants").Preload("Category")
-	if err := query.Offset(offset).Limit(limit).Find(&products).Error; err != nil {
+	if err := query.Order("id").Offset(offset).Limit(limit).Find(&products).Error; err != nil {
 		return nil, 0, err
 	}
 
