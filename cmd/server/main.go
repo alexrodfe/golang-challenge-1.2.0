@@ -9,10 +9,11 @@ import (
 	"os/signal"
 	"syscall"
 
+	"github.com/alexrodfe/golang-challenge-1.2.0/app/catalog"
+	"github.com/alexrodfe/golang-challenge-1.2.0/app/categories"
+	"github.com/alexrodfe/golang-challenge-1.2.0/app/database"
+	"github.com/alexrodfe/golang-challenge-1.2.0/models"
 	"github.com/joho/godotenv"
-	"github.com/mytheresa/go-hiring-challenge/app/catalog"
-	"github.com/mytheresa/go-hiring-challenge/app/database"
-	"github.com/mytheresa/go-hiring-challenge/models"
 )
 
 func main() {
@@ -38,9 +39,15 @@ func main() {
 	prodRepo := models.NewProductsRepository(db)
 	cat := catalog.NewCatalogHandler(prodRepo)
 
+	catRepo := models.NewCategoriesRepository(db)
+	cats := categories.NewCategoriesHandler(catRepo)
+
 	// Set up routing
 	mux := http.NewServeMux()
 	mux.HandleFunc("GET /catalog", cat.HandleGet)
+	mux.HandleFunc("GET /catalog/{code}", cat.HandleGetByCode)
+	mux.HandleFunc("GET /categories", cats.HandleGet)
+	mux.HandleFunc("POST /categories", cats.HandleCreate)
 
 	// Set up the HTTP server
 	srv := &http.Server{

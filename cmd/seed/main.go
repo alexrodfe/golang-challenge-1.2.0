@@ -9,7 +9,7 @@ import (
 
 	"github.com/joho/godotenv"
 
-	"github.com/mytheresa/go-hiring-challenge/app/database"
+	"github.com/alexrodfe/golang-challenge-1.2.0/app/database"
 )
 
 func main() {
@@ -49,7 +49,7 @@ func main() {
 
 		content, err := os.ReadFile(path)
 		if err != nil {
-			log.Printf("reading file %s failed: %v", file.Name(), err)
+			log.Fatalf("reading file %s failed: %v", file.Name(), err)
 		}
 
 		sql := string(content)

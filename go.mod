@@ -1,11 +1,10 @@
-module github.com/mytheresa/go-hiring-challenge
+module github.com/alexrodfe/golang-challenge-1.2.0
 
 go 1.24.3
 
 require github.com/joho/godotenv v1.5.1
 
 require (
-	github.com/lib/pq v1.10.9
 	github.com/shopspring/decimal v1.4.0
 	github.com/stretchr/testify v1.10.0
 	gorm.io/driver/postgres v1.6.0
@@ -23,6 +22,7 @@ require (
 	github.com/kr/text v0.2.0 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/rogpeppe/go-internal v1.14.1 // indirect
+	github.com/stretchr/objx v0.5.2 // indirect
 	golang.org/x/crypto v0.35.0 // indirect
 	golang.org/x/sync v0.11.0 // indirect
 	golang.org/x/text v0.22.0 // indirect
